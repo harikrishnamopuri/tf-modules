@@ -11,7 +11,7 @@ module "name" {
     compact(
       [
         module.frigga_app.string,
-        var.env
+        var.env,
         var.region,
       ],
     ),
@@ -37,7 +37,7 @@ resource "aws_security_group" "sg" {
 resource "aws_security_group_rule" "cluster_ingress" {
   security_group_id = aws_security_group.sg.id
   from_port         = 0
-  to_port           = -1
+  to_port           = 65535
   type              = "ingress"
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "cluster_ingress" {
 resource "aws_security_group_rule" "cluster_egress" {
   security_group_id = aws_security_group.sg.id
   from_port         = 0
-  to_port           = -1
+  to_port           = 65535
   type              = "egress"
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
@@ -72,13 +72,13 @@ data "aws_ami" "ubuntu" {
 
 
 resource "aws_launch_configuration" "aws_launch_conf" {
-  count     = var.aws_launch_conf == "true" ? 0 : 1
-  user_data = module.userdata.body
+  count     = var.aws_launch_conf == "true" ? 1 : 0
+  user_data = "ls /home"
   name_prefix          = "${module.name.string}-"
   iam_instance_profile = var.instance_profile
   image_id             = data.aws_ami.ubuntu.id
   instance_type        = var.instance_type
-  security_groups = [concat(var.extra_security_groups, [aws_security_group.sg.id])]
+  security_groups = concat(var.extra_security_groups, [aws_security_group.sg.id])
   key_name        = var.ssh_key
 
   lifecycle {
@@ -103,17 +103,16 @@ resource "random_id" "asg_id" {
 
 
 resource "aws_autoscaling_group" "asg" {
-  count = var.autoscaling_group == "true" ? 0 : 1
+  count = var.autoscaling_group == "true" ? 1 : 0
   name  = "${module.name.string}-${random_id.asg_id.hex}"
 
   force_delete         = true
   vpc_zone_identifier  = var.private_subnets
-  launch_configuration = aws_launch_configuration.current[0].name
+  launch_configuration = aws_launch_configuration.aws_launch_conf[count.index].name
 
   max_size = var.max_size
   min_size = var.min_size
 
-  target_group_arns         = var.target_group_arns
   health_check_grace_period = var.launch_time
   health_check_type         = var.health_check_type
   termination_policies      = var.termination_policies

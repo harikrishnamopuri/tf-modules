@@ -46,7 +46,7 @@ variable "extra_security_groups" {
 # Launch config
 variable "instance_profile" {
   type    = string
-  default = "ansible-pull"
+  default = "krishna"
 }
 
 variable "instance_type" {
@@ -124,5 +124,19 @@ variable "asg_suffix" {
 variable "account" {
   type    = string
   default = "dev"
+}
+
+variable "region" {
+  type    = string
+  default = "us-west-1"
+}
+
+variable "aws_launch_conf" {
+  type  = string
+  default  = "true"
+}
+variable "autoscaling_group" {
+  type  = string
+  default  = "true"
 }
 

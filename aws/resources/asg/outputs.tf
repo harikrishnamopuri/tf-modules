@@ -1,9 +1,13 @@
-output "id" {
+output "asg_id" {
   value = aws_autoscaling_group.asg.*.id
 }
 
-output "name" {
+output "asg_name" {
   value = aws_autoscaling_group.asg.*.name
+}
+
+output "alf_name" {
+   value = aws_launch_configuration.aws_launch_conf[0].name
 }
 
 output "sg" {
