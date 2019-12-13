@@ -20,4 +20,9 @@ output "instance_profile_arn" {
 output "instance_role_name" {
   value = module.apache2_iam.role_name
 }
-
+output "lb_id" {
+  value = module.apache2_lb.lb_id
+}
+output "tg_arn" {
+  value = module.apache2_lb.tg_arn
+}

@@ -39,3 +39,34 @@ variable "role_name" {
    type = string 
    default  = "hari.mopuri"
 }
+
+#asr lb
+variable "asr_spinnaker_managed" {
+  type    = string
+  default = "false"
+}
+
+variable "asr_asg_suffix" {
+  type    = string
+  default = ""
+}
+
+variable "asr_frigga_detail" {
+  type    = string
+  default = ""
+}
+
+variable "apache2_ports" {
+  type = map(string)
+
+  default = {
+    inbound = 8080
+  }
+}
+
+variable "apache2_lb" {
+  type   = string
+  default = "true"
+
+}
+
