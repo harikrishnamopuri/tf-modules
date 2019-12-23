@@ -16,7 +16,7 @@ module "apache2_lb" {
   subnets       = var.private_subnets
   env           = var.env
 
-  type            = "alb"
+  type            =  var.lb_type
   internal        = "true"
   apache2_lb      = var.apache2_lb
 

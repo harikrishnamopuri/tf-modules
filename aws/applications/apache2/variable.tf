@@ -56,6 +56,11 @@ variable "asr_frigga_detail" {
   default = ""
 }
 
+variable "lb_type" {
+  type    = string
+  default = ""
+}
+
 variable "apache2_ports" {
   type = map(string)
 
