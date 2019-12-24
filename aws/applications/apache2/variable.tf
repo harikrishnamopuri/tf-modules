@@ -144,10 +144,6 @@ variable "account" {
   default = "dev"
 }
 
-variable "region" {
-  type    = string
-  default = "us-west-1"
-}
 
 variable "aws_launch_conf" {
   type  = string
