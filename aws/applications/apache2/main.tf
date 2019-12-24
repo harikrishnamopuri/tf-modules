@@ -5,7 +5,9 @@ module "apache2" {
        vpc_id   = var.vpc_id
        ami      = var.ami
        env      = var.env      
-       ansible_role = var.ansible_role
+       max_size = var.max_size
+       min_size = var.min_size
+       desired_capacity = var.desired_capacity
        instance_profile = module.apache2_iam.instance_profile_arn
 }
 module "apache2_lb" {

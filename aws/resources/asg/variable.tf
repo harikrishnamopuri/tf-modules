@@ -95,7 +95,10 @@ variable "min_size" {
   type    = string
   default = 1
 }
-
+variable "desired_capacity" {
+  type    = string
+  default = 1
+}
 variable "state_env" {
   type    = string
   default = "default"
