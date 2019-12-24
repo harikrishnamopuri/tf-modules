@@ -1,0 +1,59 @@
+Install halyard
+sudo bash InstallHalyard.sh
+Add kubernetes cluster as cloudprovider
+You can add other cloudproviders as well like aws/gcp/etc. Please reachout if any help is required.
+
+Go to GKE console, click on "connect" next to the cluster... Run the copied command.
+
+To get context of the cluster, run :
+
+kubect config current-context
+Add the kubernetes account to spinnaker
+
+hal config provider kubernetes account add <account-name> \
+    --provider-version v2 \
+    --context <output of above command>
+Enable kubernetes
+
+hal config provider kubernetes enable
+Debugging errors
+If you're not able to run get-credentials, then check the permission of the service account - if it has kubernetes-admin permissions for project in which that cluster resides.
+Add GCS artifacts account to spinnaker (for helm charts)
+Create a service account with roles/storage.admin access. Get its json key file.
+
+Add the artifact account to spinnaker
+
+hal config artifact gcs account add <artifact account name> \
+    --json-path /path/to/json/key
+Enable artifact support in spinnaker
+
+hal config features edit --artifacts true
+Enable GCS as artifact in spinnaker
+
+hal config artifact gcs enable
+Persistant storage for spinnaker
+Choose a gcs project in which data must be stored.
+
+Create / Identify a service account that has storage admin access
+
+Get is json-key-file
+
+Create a gcs bucket for persistant storage that will be used by front50
+
+Configure spinnaker to use that bucket to store persistant storage data.
+
+hal config storage edit --type gcs
+
+hal config storage gcs edit --project <project name> \
+    --bucket <bucket name> \
+    --json-path /path/to/json/key
+Deploy spinnaker
+List all the versions of spinnaker available and identify which on you want to deploy
+
+hal version list
+Configure hal to deploy a specific version of spinnaker
+
+hal config version edit --version <version>
+Deploy spinnaker
+
+sudo hal deploy apply
