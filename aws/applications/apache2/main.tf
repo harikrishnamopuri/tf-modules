@@ -1,13 +1,23 @@
 module "apache2" {
        source = "../../resources/asg"
        app_name = var.app_name
+       
        private_subnets = var.private_subnets
        vpc_id   = var.vpc_id
+       
        ami      = var.ami
        env      = var.env      
        max_size = var.max_size
        min_size = var.min_size
        desired_capacity = var.desired_capacity
+       ebs_type   = var.ebs_type
+       ebs_size   = var.ebs_size
+       ebs_delete = var.ebs_delete
+       ssh_key    = var.ssh_key
+       health_check_type = var.health_check_type
+
+      
+       instance_type  = var.instance_type
        instance_profile = module.apache2_iam.instance_profile_arn
 }
 module "apache2_lb" {
