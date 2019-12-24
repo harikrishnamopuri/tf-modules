@@ -29,4 +29,4 @@ users:
         - "${var.eks_cluster_name}"
 KUBECONFIG
 
-
+}
