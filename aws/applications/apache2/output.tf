@@ -23,6 +23,15 @@ output "instance_role_name" {
 output "lb_id" {
   value = module.apache2_lb.lb_id
 }
+output "lb_zone_id" {
+  value = module.apache2_lb.zone_id
+}
+output "lb_dns" {
+  value = module.apache2_lb.dns
+}
+output "lb_sg" {
+  value = module.apache2_lb.sg_id
+}
 output "tg_arn" {
   value = module.apache2_lb.tg_arn
 }
