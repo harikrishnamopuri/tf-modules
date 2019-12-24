@@ -21,9 +21,6 @@ variable "env" {
   type = string
 }
 
-variable "ansible_role" {
-  type = string
-}
 
 # Optional variables
 variable "ami_os" {

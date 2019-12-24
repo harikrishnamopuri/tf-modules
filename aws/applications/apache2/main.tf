@@ -35,7 +35,7 @@ module "apache2_lb" {
   listener_lb = [
     {
       port      = var.apache2_ports["inbound"]
-      dest_port = var.apache2_ports["inbound"]
+      dest_port = tonumber(var.apache2_ports["inbound"])
     },
   ]
 

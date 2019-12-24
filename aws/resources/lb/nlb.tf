@@ -41,7 +41,7 @@ resource "aws_lb_target_group" "nlb" {
 
   health_check {
     healthy_threshold = lookup(var.listener_srv[count.index], "healthy", 3)
-    interval          = lookup(var.listener_srv[count.index], "interval", 15)
+    interval          = lookup(var.listener_srv[count.index], "interval", 10)
     protocol          = lookup(var.listener_srv[count.index], "healthcheck_protocol", "TCP")
     port = lookup(
       var.listener_srv[count.index],

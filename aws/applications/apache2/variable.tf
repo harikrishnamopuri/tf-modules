@@ -30,10 +30,6 @@ variable "env" {
   default = "dev"
 }
 
-variable "ansible_role" {
-  type = string
-  default = "test"
-}
 
 variable "role_name" {
    type = string 
