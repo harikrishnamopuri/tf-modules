@@ -1,4 +1,5 @@
-variable "storageaccountname" {
+#storage account required variables
+variable "sa_name" {
   type = string
   default = "storageaccounthari"
 }
@@ -17,4 +18,13 @@ variable "account_tier" {
 variable "account_replication_type" {
   type = string
   default = "GRS"
+}
+#container required variables
+variable "sc_name" {
+  type = string
+  default = "storagecontainer"
+}
+variable "container_access_type" {
+  type = string
+  default = "private"
 }
