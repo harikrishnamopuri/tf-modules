@@ -9,26 +9,15 @@ resource "azurerm_virtual_network" "vn" {
     Terraform = "True"
   }
 }
-
-
-resource "azurerm_subnet" "pub_subnet" {
-  count                = length(var.public_subnets)
+resource "azurerm_subnet" "subnet" {
+  count                = length(var.subnets)
+  depends_on = [azurerm_virtual_network.vn]
   name                 = format(
-      "pub-%s-%d",
-      var.vn_name,
-      count.index) 
-  resource_group_name  = var.rg_name
-  virtual_network_name = azurerm_virtual_network.vn.name
-  address_prefix       = element(var.public_subnets, count.index)
-}
-resource "azurerm_subnet" "private_subnet" {
-  count                = length(var.private_subnets)
-  name                 = format(
-      "priv-%s-%d",
+      "sub-%s-%d",
       var.vn_name,
       count.index)
   resource_group_name  = var.rg_name
-  virtual_network_name = azurerm_virtual_network.vn.name
-  address_prefix       = element(var.private_subnets, count.index)
+  virtual_network_name = var.vn_name
+  address_prefix       = element(var.subnets, count.index)
 
 }

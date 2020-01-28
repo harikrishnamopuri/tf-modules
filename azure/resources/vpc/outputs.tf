@@ -7,3 +7,6 @@ output "vn_name" {
 output "vn_address_space" {
   value =  azurerm_virtual_network.vn.address_space
 }
+output "subnet_name" {
+  value = [ azurerm_subnet.subnet.*.address_prefix ]
+}

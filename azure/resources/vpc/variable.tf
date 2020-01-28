@@ -16,11 +16,7 @@ variable "rg_location" {
 }
 
 #subnet required vairables
-variable "public_subnets" {
+variable "subnets" {
    type =  list
-   default = [ "10.1.0.0/16" ] 
-}
-variable "private_subnets" {
-   type =  list
-   default = [ "10.2.0.0/16", "10.3.0.0/16", "10.4.0.0/16" ]
+   default = [ "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24" ]
 }
