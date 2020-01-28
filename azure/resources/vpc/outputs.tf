@@ -10,3 +10,6 @@ output "vn_address_space" {
 output "subnet_name" {
   value = [ azurerm_subnet.subnet.*.address_prefix ]
 }
+output "subnet_id" {
+  value = [ azurerm_subnet.subnet.*.id ]
+}
