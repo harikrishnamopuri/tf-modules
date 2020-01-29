@@ -17,7 +17,7 @@ resource "azurerm_lb" "azlb" {
   frontend_ip_configuration {
     name                          =  var.frontend_name
     public_ip_address_id          = var.type == "public" ? join("",azurerm_public_ip.azlb.*.id) : ""
-    subnet_id                     = var.frontend_subnet_id
+    subnet_id                     = var.type == "private" ? join("",[ var.frontend_subnet_id ]) :  ""
     private_ip_address            = var.frontend_private_ip_address
     private_ip_address_allocation = var.frontend_private_ip_address_allocation
   }
@@ -65,4 +65,15 @@ resource "azurerm_lb_rule" "azlb" {
   idle_timeout_in_minutes        = 5
   probe_id                       = element(azurerm_lb_probe.azlb.*.id,count.index)
   depends_on                     = [azurerm_lb_probe.azlb]
+}
+
+resource "azurerm_lb_nat_pool" "azlb" {
+  resource_group_name            = var.rg_name
+  loadbalancer_id                = azurerm_lb.azlb.id
+  name                           = "${var.prefix}-lb"
+  protocol                       = "Tcp"
+  frontend_port_start            = 80
+  frontend_port_end              = 81
+  backend_port                   = 8080
+  frontend_ip_configuration_name = var.frontend_name
 }

@@ -5,7 +5,7 @@ variable "rg_location" {
 
 variable "rg_name" {
   description = "(Required) The name of the resource group where the load balancer resources will be placed."
-  default     = "demo"
+  default     = "dummy"
 }
 
 variable "prefix" {
@@ -40,7 +40,7 @@ variable "lb_probe_interval" {
 
 variable "frontend_name" {
   description = "(Required) Specifies the name of the frontend ip configuration."
-  default     = "myPublicIP"
+  default     = "mypublicip"
 }
 
 variable "public_ip_address_allocation" {
@@ -64,7 +64,7 @@ variable "type" {
 
 variable "frontend_subnet_id" {
   description = "(Optional) Frontend subnet id to use when in private mode"
-  default     = "/subscriptions/b95112e4-7fe7-4f99-a2bd-65ec04aaa72e/resourceGroups/dummy/providers/Microsoft.Network/virtualNetworks/dummy/subnets/sub-dummy-0"
+  default     = "/subscriptions/b95112e4-7fe7-4f99-a2bd-65ec04aaa72e/resourceGroups/dummy/providers/Microsoft.Network/virtualNetworks/dummy/subnets/subnet1"
 }
 
 variable "frontend_private_ip_address" {
