@@ -28,7 +28,7 @@ resource "azurerm_virtual_machine" "vm-linux" {
   name                          = format("%s-%s", var.vm_hostname , count.index )
   location                      = var.rg_location
   resource_group_name           = var.rg_name
-  availability_set_id           = azurerm_availability_set.vm.id
+  availability_set_id           = var.aset_id
   vm_size                       = var.vm_size
   network_interface_ids         = [element(azurerm_network_interface.vm.*.id, count.index)]
   delete_os_disk_on_termination = var.delete_os_disk_on_termination
@@ -76,7 +76,7 @@ resource "azurerm_virtual_machine" "vm-linux-with-datadisk" {
   name                          = format("%s-%d", var.vm_hostname,count.index)
   location                      = var.rg_location
   resource_group_name           = var.rg_name
-  availability_set_id           = azurerm_availability_set.vm.id
+  availability_set_id           = var.aset_id
   vm_size                       = var.vm_size
   network_interface_ids         = [element(azurerm_network_interface.vm.*.id, count.index)]
   delete_os_disk_on_termination = var.delete_os_disk_on_termination
@@ -132,7 +132,7 @@ resource "azurerm_virtual_machine" "vm-windows" {
   name                          = format("%s%d", var.vm_hostname, count.index)
   location                      = var.rg_location
   resource_group_name           = var.rg_name
-  availability_set_id           = azurerm_availability_set.vm.id
+  availability_set_id           = var.aset_id
   vm_size                       = var.vm_size
   network_interface_ids         = [element(azurerm_network_interface.vm.*.id, count.index)]
   delete_os_disk_on_termination = var.delete_os_disk_on_termination
@@ -173,7 +173,7 @@ resource "azurerm_virtual_machine" "vm-windows-with-datadisk" {
   name                          = format("%s%d", var.vm_hostname, count.index)
   location                      = var.rg_location
   resource_group_name           = var.rg_name
-  availability_set_id           = azurerm_availability_set.vm.id
+  availability_set_id           = var.aset_id
   vm_size                       = var.vm_size
   network_interface_ids         = [element(azurerm_network_interface.vm.*.id, count.index)]
   delete_os_disk_on_termination = var.delete_os_disk_on_termination
@@ -215,15 +215,6 @@ resource "azurerm_virtual_machine" "vm-windows-with-datadisk" {
     enabled     = var.boot_diagnostics
     storage_uri = var.boot_diagnostics == "true" ? join(",", azurerm_storage_account.vm-sa.*.primary_blob_endpoint) : "" 
   }
-}
-
-resource "azurerm_availability_set" "vm" {
-  name                         = format("%s-avset", var.vm_hostname)
-  location                     = var.rg_location
-  resource_group_name          = var.rg_name
-  platform_fault_domain_count  = 2
-  platform_update_domain_count = 2
-  managed                      = true
 }
 
 resource "azurerm_public_ip" "vm" {

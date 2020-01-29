@@ -7,6 +7,11 @@ variable "rg_location" {
   description = "The location/region where the virtual network is created. Changing this forces a new resource to be created."
   default = "West US"
 }
+variable "aset_id" {
+  description = "The location/region where the virtual network is created. Changing this forces a new resource to be created."
+  default = "/subscriptions/b95112e4-7fe7-4f99-a2bd-65ec04aaa72e/resourceGroups/dummy/providers/Microsoft.Compute/availabilitySets/demo"
+}
+
 
 variable "vnet_subnet_id" {
   description = "The subnet id of the virtual network where the virtual machines will reside."

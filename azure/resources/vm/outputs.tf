@@ -12,11 +12,11 @@ output "network_interface_private_ip" {
   description = "private ip addresses of the vm nics"
   value       = azurerm_network_interface.vm.*.private_ip_address
 }
-
-output "availability_set_id" {
-  description = "id of the availability set where the vms are provisioned."
-  value       = azurerm_availability_set.vm.id
+output "vm_aset" {
+  description = "availabilty set id"
+  value       = var.aset_id
 }
+
 
 #/* optionally, retrieve public IP properties
 output "public_ip_id" {
