@@ -14,5 +14,5 @@ resource "azurerm_subnet" "subnet" {
   resource_group_name  = var.rg_name
   virtual_network_name = var.vn_name
   address_prefix       = var.subnet_prefixes[count.index] 
-  azurerm_subnet_network_security_group_association = lookup(var.nsg_ids,var.subnet_names[count.index],"")
+#  azurerm_subnet_network_security_group_association = lookup(var.nsg_ids,var.subnet_names[count.index],"")
 }
