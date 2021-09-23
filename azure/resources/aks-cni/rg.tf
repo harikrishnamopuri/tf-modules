@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = var.rg_name
+  name     = join("-", [var.name,var.env,lower(var.region),"rg"])
   location = var.rg_location
   tags = {
     Terraform = "True"

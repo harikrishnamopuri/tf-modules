@@ -6,17 +6,24 @@ data "azurerm_subscription" "current" {}
 
 
 resource "azuread_group" "ad" {
-  name     = "example-ad"
- #owners           = [data.azuread_client_config.current.object_id]
-#  security_enabled = true
+  name     = join("-", [var.name,var.env,lower(var.region),"ad"])
+  #display_name = join("-", [var.name,var.env,lower(var.region),"ad"])
+   #owners           = [data.azuread_client_config.current.object_id]
+  #security_enabled = true
 } 
 
 resource "azuread_application" "aks" {
-  name = var.name
+  name = join("-", [var.name,var.env,lower(var.region)])
+  #displa_name = join("-", [var.name,var.env,lower(var.region)])
 }
 
 resource "azuread_service_principal" "aks" {
   application_id = azuread_application.aks.application_id
+}
+
+resource "random_password" "aks" {
+  length  = 20
+  special = true
 }
 
 resource "azuread_service_principal_password" "aks" {
@@ -60,12 +67,6 @@ resource "azurerm_role_assignment" "aks" {
   }
 }
 
- 
-resource "random_password" "aks" {
-  length  = 20
-  special = true
-}
-
 
 resource "azurerm_kubernetes_cluster" "aks" {
   depends_on          = [azurerm_role_assignment.aks]
@@ -75,12 +76,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     ]
   }
 
-  name                            = "test"
+  name                            = join("-", [var.name,var.env,lower(var.region)])
   location                        = var.rg_location
   resource_group_name             = azurerm_resource_group.rg.name
-  dns_prefix                      = var.name
+  dns_prefix                      = join("-", [var.name,var.env,lower(var.region)])
   kubernetes_version              = var.kubernetes_version
-  node_resource_group             = "${var.name}-worker"
+  node_resource_group             = join("-", [var.name,var.env,lower(var.region),"worker"])
   api_server_authorized_ip_ranges = var.api_auth_ips
 
   default_node_pool {
@@ -163,9 +164,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
   max_pods              =  50
   os_disk_size_gb       = 128
   os_type               = "Linux"
-  #vnet_subnet_id        = var.vnet_subnet_id
   vnet_subnet_id        = azurerm_subnet.subnet[0].id
-  #vnet_subnet_id        = "/subscriptions/e92f9656-592f-4279-945c-91fefb05a97d/resourceGroups/testhari/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1"
   node_taints           = each.value.taints
   enable_auto_scaling   = each.value.cluster_auto_scaling
   min_count             = each.value.cluster_auto_scaling_min_count

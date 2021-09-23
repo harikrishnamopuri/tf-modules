@@ -1,6 +1,3 @@
-variable "client_id" { default = "9eb29a30-48b7-499f-9b58-fc1c5b47eae3" }
-variable "client_secret" { default = ":h5B8F?6pP5[bu:41t_JrL-x6OQbl[XA" }
-
 variable "kubernetes_version" {
   description = "Kubernetes version"
   type        = string
@@ -29,32 +26,6 @@ variable "rg_location" {
   default      = "West US"
 }
 
-
-#variable "aad_client_application_id" {
-#  description = "Client application id for AAD integration"
-#  type        = string
-#}
-
-#variable "aad_server_application_id" {
-#  description = "Server application id for AAD integration"
-#  type        = string
-#}
-
-#variable "aad_server_application_secret" {
-#  description = "Server application secret for AAD integration"
-#  type        = string
-#}
-
-#variable "aad_tenant_id" {
-#  description = "AAD tenant id for AAD integration"
-#  type        = string
-#}
-
-variable "aad_group_name" {
-  description = "Name of the Azure AD group for cluster-admin access"
-  type        = string
-  default     = "test"
-}
 
 variable "api_auth_ips" {
   description = "Whitelist of IP addresses that are allowed to access the AKS Master Control Plane API"
